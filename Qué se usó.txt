@@ -1,0 +1,6 @@
+Lenguaje: Python3
+Framework: Django
+Base de datos: SQLite
+Plantillas: HTML - jinja2
+Hosting: ngrok
+Repositorio: Github
