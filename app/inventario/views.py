@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Producto
+from .models import Producto, Usuario
 
 def index(request):
 
@@ -34,8 +34,6 @@ def index(request):
     context = {'productos':Producto.objects.all()}
     return render(request,'index.html', context=context)
 
-
-
 def delete(request,id):
     #Se busca el objeto por id desde la base de datos
     obj = Producto.objects.get(id=id)
@@ -43,7 +41,6 @@ def delete(request,id):
     obj.delete()
     #Se redirige al index
     return redirect('index')
-
 
 def edit(request,id):
 
@@ -76,3 +73,21 @@ def edit(request,id):
 
     obj = Producto.objects.get(id=id)
     return render(request,'edit.html', context={'data':obj})
+
+def login(request):
+
+
+    if request.method == 'POST':   
+
+        user = request.POST.get('user')
+        password = request.POST.get('password')
+
+        if Usuario.objects.filter(nombreDeUsuario=user, password=password).exists():
+           return redirect('index')
+        else:
+            return render(request,'login.html',context={'mensaje':'Los sentimos, sus credenciales no son válidas'})
+
+
+       
+
+    return render(request,'login.html')
